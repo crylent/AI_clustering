@@ -1,0 +1,45 @@
+﻿<Window x:Class="AI_clusterization.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        Background="Gainsboro">
+    <DockPanel>
+        <Grid Margin="10" Width="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" BorderBrush="DarkGray" Background="White">
+                <StackPanel Margin="5">
+                    <TextBlock Margin="5" FontSize="18" FontFamily="Arial Black">Dataset</TextBlock>
+                    <DockPanel>
+                        <TextBox x:Name="DatasetPath" Margin="5" Width="100" IsReadOnly="True">Not selected</TextBox>
+                        <Button Margin="4,5" Width="70" HorizontalAlignment="Right" Click="SelectDataset">Select</Button>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+            <ListView Grid.Row="1" x:Name="DatasetItems" Margin="0,10" SelectionChanged="SelectItem" MinHeight="200"
+                      VerticalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+            <Border Grid.Row="2" BorderThickness="1" BorderBrush="DarkGray" Background="White">
+                <StackPanel Margin="5">
+                    <TextBlock Margin="5" FontSize="18" FontFamily="Arial Black">Clusterization</TextBlock>
+                    <DockPanel Margin="5">
+                        <TextBlock>Number of clusters</TextBlock>
+                        <TextBox x:Name="Clusters" Width="50" HorizontalAlignment="Right">2</TextBox>
+                    </DockPanel>
+                    <Button Margin="5" Click="RunClusterization">Run</Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <wpf:WpfPlot x:Name="Plot" HorizontalAlignment="Stretch" Margin="10" />
+    </DockPanel>
+</Window>

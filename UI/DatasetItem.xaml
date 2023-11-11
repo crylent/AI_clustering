@@ -1,0 +1,21 @@
+<ListViewItem x:Class="AI_clusterization.UI.DatasetItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="30" d:DesignWidth="200">
+    <ListViewItem.Resources>
+        <ImageSource x:Key="PlaySource">/Icons/play.png</ImageSource>
+        <!-- ReSharper disable once Xaml.RedundantResource -->
+        <ImageSource x:Key="StopSource">/Icons/stop.png</ImageSource>
+    </ListViewItem.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="ItemName" VerticalAlignment="Center" FontSize="14"/>
+        <Image Grid.Column="1" x:Name="Button" Source="{StaticResource PlaySource}" Height="30" MouseDown="PlayOrStop"/>
+    </Grid>
+</ListViewItem>

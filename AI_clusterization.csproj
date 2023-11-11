@@ -7,4 +7,44 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FftSharp" Version="2.1.0" />
+      <PackageReference Include="NAudio" Version="2.2.1" />
+      <PackageReference Include="ScottPlot" Version="4.1.68" />
+      <PackageReference Include="ScottPlot.WPF" Version="4.1.68" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Icons\play.png" />
+      <Resource Include="Icons\play.png" />
+      <None Remove="Icons\stop.png" />
+      <Resource Include="Icons\stop.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="UI\DatasetCluster.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI\DatasetItem.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationDefinition Include="UI\App.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </ApplicationDefinition>
+    </ItemGroup>
+
 </Project>
