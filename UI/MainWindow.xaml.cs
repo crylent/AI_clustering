@@ -6,8 +6,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using AI_clusterization.DataProcessing;
+using Cursors = System.Windows.Input.Cursors;
 
 namespace AI_clusterization.UI
 {
@@ -58,6 +60,7 @@ namespace AI_clusterization.UI
             var result = dialog.ShowDialog();
             if (result != System.Windows.Forms.DialogResult.OK) return;
 
+            Mouse.OverrideCursor = Cursors.Wait;
             DatasetPath.Text = dialog.SelectedPath;
             DatasetItems.Items.Clear();
             
@@ -71,6 +74,8 @@ namespace AI_clusterization.UI
                 _dataset.Add(spectrum);
                 DatasetItems.Items.Add(new DatasetItem(file));
             }
+
+            Mouse.OverrideCursor = Cursors.Arrow;
 
             // save initial order of items
             _items = DatasetItems.Items.OfType<DatasetItem>().ToList();
@@ -91,6 +96,7 @@ namespace AI_clusterization.UI
 
         private void RunClusterization(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             var clusters = Clusterization.Run(_dataset, Convert.ToInt32(Clusters.Text));
             
             DatasetItems.Items.Clear();
@@ -104,6 +110,7 @@ namespace AI_clusterization.UI
                     _items[index].Background = ClusterColors[i % ClusterColors.Length];
                 }
             }
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void EditBufferSize(object sender, RoutedPropertyChangedEventArgs<double> e)
