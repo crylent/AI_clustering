@@ -6,9 +6,6 @@ namespace AI_clusterization.DataProcessing;
 
 public class Spectrum
 {
-    private const int BufferSize = 65536;
-    private const int PowerBufferSize = BufferSize / 4;
-    
     public const double MinPower = -90;
 
     private readonly double[] _frequencies;
@@ -24,36 +21,37 @@ public class Spectrum
         _power = power;
     }
 
-    public static Spectrum FromFile(string file)
+    public static Spectrum FromFile(string file, int bufferSize)
     {
         var stream = Utility.OpenWaveStream(file);
         var sampleProvider = stream.ToSampleProvider();
         var length = (int) stream.Length / (stream.WaveFormat.BitsPerSample / 8);
-        var fullLength = length / BufferSize * BufferSize + BufferSize;
+        var fullLength = length / bufferSize * bufferSize + bufferSize;
         var samples = new float[fullLength];
         sampleProvider.Read(samples, 0, length);
 
-        var frames = fullLength / BufferSize;
-        var power = new double[PowerBufferSize];
-        for (var i = 0; i < samples.Length; i += BufferSize)
+        var frames = fullLength / bufferSize;
+        var powerBufferSize = bufferSize / 4;
+        var power = new double[powerBufferSize];
+        for (var i = 0; i < samples.Length; i += bufferSize)
         {
-            var buffer = new double[BufferSize];
-            Array.Copy(samples, i, buffer, 0, BufferSize);
+            var buffer = new double[bufferSize];
+            Array.Copy(samples, i, buffer, 0, bufferSize);
             var frameSpectrum = FftSharp.FFT.ForwardReal(buffer);
             var framePower = FftSharp.FFT.Power(frameSpectrum);
-            for (var j = 0; j < PowerBufferSize; j++)
+            for (var j = 0; j < powerBufferSize; j++)
             {
                 if (framePower[j] > MinPower) power[j] += framePower[j];
                 else power[j] += MinPower;
             }
         }
 
-        for (var j = 0; j < PowerBufferSize; j++)
+        for (var j = 0; j < powerBufferSize; j++)
         {
             power[j] /= frames;
         }
         
-        var frequencies = FftSharp.FFT.FrequencyScale(PowerBufferSize, stream.WaveFormat.SampleRate);
+        var frequencies = FftSharp.FFT.FrequencyScale(powerBufferSize, stream.WaveFormat.SampleRate);
         return new Spectrum(frequencies, power);
     }
 

@@ -23,9 +23,18 @@
                         <TextBox x:Name="DatasetPath" Margin="5" Width="100" IsReadOnly="True">Not selected</TextBox>
                         <Button Margin="4,5" Width="70" HorizontalAlignment="Right" Click="SelectDataset">Select</Button>
                     </DockPanel>
+                    <DockPanel Margin="5,5,5,0">
+                        <TextBlock>Buffer size:</TextBlock>
+                        <TextBox x:Name="BufferSize" Width="70" HorizontalAlignment="Right"
+                                 IsReadOnly="True" TextAlignment="Right" Text="65536"/>
+                    </DockPanel>
+                    <Slider Margin="5,2" 
+                            Minimum="10" Maximum="19" TickFrequency="1" Value="16"
+                            IsSnapToTickEnabled="True"
+                            ValueChanged="EditBufferSize"/>
                 </StackPanel>
             </Border>
-            <ListView Grid.Row="1" x:Name="DatasetItems" Margin="0,10" SelectionChanged="SelectItem" MinHeight="200"
+            <ListView Grid.Row="1" x:Name="DatasetItems" Margin="0,10" SelectionChanged="SelectItem" MinHeight="150"
                       VerticalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"/>

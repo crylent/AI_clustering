@@ -30,6 +30,8 @@ namespace AI_clusterization.UI
         private Dataset _dataset = null!;
         private List<DatasetItem> _items = null!;
 
+        private int _bufferSize = 65536;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -65,7 +67,7 @@ namespace AI_clusterization.UI
             foreach (var file in files)
             {
                 Debug.Print(file);
-                var spectrum = Spectrum.FromFile(file);
+                var spectrum = Spectrum.FromFile(file, _bufferSize);
                 _dataset.Add(spectrum);
                 DatasetItems.Items.Add(new DatasetItem(file));
             }
@@ -102,6 +104,12 @@ namespace AI_clusterization.UI
                     _items[index].Background = ClusterColors[i % ClusterColors.Length];
                 }
             }
+        }
+
+        private void EditBufferSize(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _bufferSize = (int) Math.Pow(2, e.NewValue);
+            BufferSize.Text = _bufferSize.ToString();
         }
     }
 }
